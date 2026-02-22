@@ -32,6 +32,7 @@
         "modelDescription": "Reads the current text from the VS Code Source Control (Git) commit message input box. Use this to check what commit message text is already present before updating it. Returns the current text or an empty string if no message is set.",
         "icon": "$(git-commit)",
         "canBeReferencedInPrompt": true,
+        "toolReferenceName": "getCommitMessage",
         "inputSchema": {
           "type": "object",
           "properties": {},
@@ -50,6 +51,7 @@
         "modelDescription": "Sets or updates the commit message in the VS Code Source Control (Git) input box. Call this tool after making code changes to describe what was changed. IMPORTANT BEHAVIOR: By default (mode='append'), if the input box already contains text, the new message is appended after the existing text with a blank line separator — existing content is never lost. Use mode='replace' only when you need to rewrite the entire message (e.g., to consolidate or restructure). Use mode='prepend' to add text before the existing content. Pass a concise, conventional-commit-style message describing the changes just made.",
         "icon": "$(git-commit)",
         "canBeReferencedInPrompt": true,
+        "toolReferenceName": "updateCommitMessage",
         "inputSchema": {
           "type": "object",
           "properties": {
