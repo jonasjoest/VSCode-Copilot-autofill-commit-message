@@ -68,6 +68,19 @@ async function getGitRepository(): Promise<Repository> {
 class GetCommitMessageTool
   implements vscode.LanguageModelTool<Record<string, never>>
 {
+  /** Metadata properties for the tool */
+  tags = ["git", "commit", "scm", "message"];
+  displayName = "Get SCM Commit Message";
+  modelDescription =
+    "Reads the current text from the VS Code Source Control (Git) commit message input box. Use this to check what commit message text is already present before updating it. Returns the current text or an empty string if no message is set.";
+  icon = "";
+  canBeReferencedInPrompt = true;
+  toolReferenceName = "getCommitMessage";
+  inputSchema = {
+    type: "object" as const,
+    properties: {},
+    additionalProperties: false,
+  };
   /**
    * Invoke the tool — read the SCM input box value.
    *
@@ -129,6 +142,33 @@ interface UpdateCommitMessageInput {
 class UpdateCommitMessageTool
   implements vscode.LanguageModelTool<UpdateCommitMessageInput>
 {
+  /** Metadata properties for the tool */
+  tags = ["git", "commit", "scm", "message"];
+  displayName = "Update SCM Commit Message";
+  modelDescription =
+    "Sets or updates the commit message in the VS Code Source Control (Git) input box. Call this tool after making code changes to describe what was changed. IMPORTANT BEHAVIOR: By default (mode='append'), if the input box already contains text, the new message is appended after the existing text with a blank line separator — existing content is never lost. Use mode='replace' only when you need to rewrite the entire message (e.g., to consolidate or restructure). Use mode='prepend' to add text before the existing content. Pass a concise, conventional-commit-style message describing the changes just made.";
+  icon = "";
+  canBeReferencedInPrompt = true;
+  toolReferenceName = "updateCommitMessage";
+  inputSchema = {
+    type: "object" as const,
+    properties: {
+      message: {
+        type: "string" as const,
+        description:
+          "The commit message text to set, append, or prepend to the SCM input box. Should follow conventional commit style (e.g., 'feat: add user auth module').",
+      },
+      mode: {
+        type: "string" as const,
+        enum: ["append", "replace", "prepend"] as const,
+        default: "append",
+        description:
+          "How to handle existing content in the input box. 'append' (default) adds the message after existing text. 'replace' overwrites entirely. 'prepend' adds before existing text.",
+      },
+    },
+    required: ["message"],
+    additionalProperties: false,
+  };
   /**
    * Invoke the tool — modify the SCM input box value.
    *
