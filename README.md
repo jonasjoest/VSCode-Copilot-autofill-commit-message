@@ -96,6 +96,35 @@ Add the following to your `.github/copilot-instructions.md`:
 4. When the session is complete the SCM input box contains a full description
    of all changes, ready to commit.
 
+## Releasing
+
+Releases are automated via the [Release workflow](.github/workflows/release.yml).
+When a GitHub release is published the workflow builds the extension and attaches
+the `.vsix` file to the release automatically.
+
+### Steps to create a new release
+
+1. **Bump the version** in `package.json` (follow [semver](https://semver.org/)):
+   ```bash
+   npm version patch   # or minor / major
+   git push && git push --tags
+   ```
+
+2. **Create and publish the release on GitHub:**
+   - Go to the repository's **Releases** page and click **Draft a new release**.
+   - Choose the tag you just pushed (e.g. `v0.2.0`).
+   - Fill in the release title and description.
+   - Click **Publish release**.
+
+3. **Wait for the workflow to finish.**  The workflow (triggered by the
+   `release: published` event) compiles the extension, packages it into a
+   `.vsix` file, and uploads it as a release asset automatically.
+
+4. **Verify** the `.vsix` file appears as an asset on the release page.
+
+> **Note:** The `GITHUB_TOKEN` secret is automatically provided by GitHub
+> Actions — no additional secrets need to be configured.
+
 ## Development
 
 ```bash
