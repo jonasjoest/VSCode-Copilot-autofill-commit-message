@@ -16,7 +16,9 @@
     "SCM Providers",
     "Chat"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "languageModelTools": [
