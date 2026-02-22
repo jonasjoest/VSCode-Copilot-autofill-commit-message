@@ -1,0 +1,17 @@
+{
+  "name": "SCM Commit Message Tool",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "ms-vscode.vscode-typescript-next"
+      ],
+      "settings": {
+        "typescript.tsdk": "node_modules/typescript/lib"
+      }
+    }
+  },
+  "postCreateCommand": "npm install",
+  "remoteUser": "node"
+}
